@@ -1,0 +1,134 @@
+:root {
+    --max-width: 75rem;
+    --padding-s: clamp(1rem, 3%, 1.5rem);
+    --padding-m: clamp(1.5rem, 6%, 3rem);
+    --padding-l: clamp(3rem, 12%, 6rem);
+    --block-margin-s: min(2rem, 4vh);
+    --block-margin-m: min(4rem, 8vh);
+    --block-margin-l: min(8rem, 16vh);
+    --gap-s: clamp(1rem, 3vmax, 1.5rem);
+    --gap-m: clamp(1.5rem, 6vmax, 3rem);
+    --gap-l: clamp(3rem, 8vmax, 4rem);
+}
+
+/*Reset*/
+*,
+*::after,
+*::before {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/*General styles*/
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+body>*+*,
+.wrapper>*+* {
+    margin-block-start: var(--block-margin-l);
+}
+
+.wrapper {
+    max-width: var(--max-width);
+    margin-inline: auto;
+}
+
+/*Navbar*/
+header {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav {
+    display: flex;
+    gap: var(--gap-m);
+    flex-basis: var(--max-width);
+}
+
+header nav>ul {
+    display: flex;
+    gap: var(--gap-s);
+    margin-inline-end: auto;
+}
+
+/*CTA section*/
+.cta,
+.cta div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: var(--gap-s);
+}
+
+.cta>*+* {
+    margin-block-start: var(--block-margin-m);
+}
+
+/*Cards*/
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-m);
+}
+
+.features article {
+    flex: 1 1 400px;
+}
+
+/*Footer*/
+footer {
+    background-color: white;
+}
+
+footer .wrapper>*+* {
+    margin-block-start: 0;
+}
+
+footer .wrapper {
+    display: grid;
+}
+
+.legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-s);
+}
+
+/*Media queries*/
+@media screen and (min-width:800px) {
+    footer .wrapper {
+        grid-template-columns: minmax(260px, 2fr) repeat(3, minmax(0, 1fr));
+    }
+
+    .copyright {
+        display: flex;
+        gap: var(--gap-l);
+    }
+
+    .copyright div {
+        flex: 1 1 200px;
+    }
+
+    .legal {
+        grid-column: 1/-1;
+    }
+
+    .legal ul {
+        gap: var(--gap-l);
+    }
+}
