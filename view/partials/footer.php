@@ -13,9 +13,9 @@
             <nav>
                 <h2>Platform</h2>
                 <ul>
-                    <li>About</li>
-                    <li>Pricing</li>
-                    <li>Contact Us</li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Pricing</a></li>
+                    <li><a href="">Contact Us</a></li>
                 </ul>
             </nav>
         </section>
@@ -23,8 +23,8 @@
             <nav>
                 <h2>Help</h2>
                 <ul>
-                    <li>Get Started</li>
-                    <li>Frequently Asked Questions</li>
+                    <li><a href="">Get Started</a></li>
+                    <li><a href="">Frequently Asked Questions</a></li>
                 </ul>
             </nav>
         </section>
@@ -32,19 +32,19 @@
             <nav>
                 <h2>Contribute</h2>
                 <ul>
-                    <li>I'm a publisher</li>
-                    <li>I'm a developer</li>
-                    <li>I want to help BGA</li>
-                    <li>Report a bug</li>
+                    <li><a href="">I'm a publisher</a></li>
+                    <li><a href="">I'm a developer</a></li>
+                    <li><a href="">I want to help BGA</a></li>
+                    <li><a href="">Report a bug</a></li>
                 </ul>
             </nav>
         </section>
         <div class="legal">
             <ul>
-                <li>Terms of use</li>
-                <li>Terms of service</li>
-                <li>Privacy</li>
-                <li>Cookies</li>
+                <li><a href="">Terms of use</a></li>
+                <li><a href="">Terms of service</a></li>
+                <li><a href="">Privacy</a></li>
+                <li><a href="">Cookies</a></li>
             </ul>
         </div>
     </div>
