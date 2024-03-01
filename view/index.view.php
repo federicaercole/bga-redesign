@@ -5,7 +5,7 @@
         <section class="cta">
             <h1>The largest board game table in the world!</h1>
             <div>
-                <a>Join for free</a>
+                <a class="button primary big">Join for free</a>
                 <span>Already have an account? <a>Log in</a></span>
             </div>
         </section>
@@ -35,7 +35,7 @@
         </section>
         <section class="cta">
             <h2>Start playing now!</h2>
-            <a>Join for free</a>
+            <a class="button primary big">Join for free</a>
         </section>
     </div>
 </main>

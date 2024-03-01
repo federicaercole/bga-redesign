@@ -7,7 +7,9 @@
                 <li>Community</li>
                 <li>Pricing</li>
             </ul>
-            <a>Log in</a>
-            <a>Register</a>
+            <div class="buttons">
+                <a class="button secondary">Log in</a>
+                <a class="button primary">Register</a>
+            </div>
         </nav>
     </header>
