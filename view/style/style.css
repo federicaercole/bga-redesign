@@ -126,6 +126,9 @@ strong::before {
     padding-inline: 2.5rem;
     border-radius: 12px;
     text-decoration: none;
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: background 0.4s ease-in-out;
 }
 
 .buttons {
@@ -133,23 +136,29 @@ strong::before {
     gap: var(--gap-s);
 }
 
-.primary {
+.button.primary {
     background-color: var(--accent-500);
     color: white;
+    background-image: linear-gradient(to left,
+            transparent,
+            transparent 50%,
+            var(--primary-600) 50%,
+            var(--primary-600));
 }
 
-.secondary {
+.button.secondary {
     background-color: var(--primary-100);
     color: var(--primary-600);
+    background-image: linear-gradient(to left,
+            transparent,
+            transparent 50%,
+            var(--accent-100) 50%,
+            var(--accent-100));
 }
 
 .big {
     font-size: var(--fs-1);
     font-weight: 600;
-}
-
-.button.primary+span {
-    font-size: var(--fs--1);
 }
 
 /*Navbar*/
@@ -172,6 +181,10 @@ header nav>ul {
     display: flex;
     gap: var(--gap-m);
     margin-inline-end: auto;
+}
+
+nav li a {
+    display: inline-block;
 }
 
 /*CTA section*/
@@ -276,36 +289,48 @@ nav a,
 footer a {
     font-weight: 400;
     text-decoration: none;
+    position: relative;
 }
 
-nav a:hover,
-nav a:active,
-nav a:focus,
-footer a:hover,
-footer a:active,
-footer a:focus {
-    border-block-end: 3px solid var(--accent-500);
+nav ul a::before,
+footer a::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: -2px;
+    height: 3px;
+    width: calc(100% + 4px);
+    background-image: linear-gradient(to left,
+            transparent,
+            transparent 50%,
+            var(--accent-500) 50%,
+            var(--accent-500));
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: background 0.4s ease-in-out;
 }
 
-.button.primary:active,
-.button.primary:hover,
-.button.primary:focus {
-    background-color: var(--primary-600);
-    color: white;
-    border: 0;
+nav a:active::before,
+nav a:hover::before,
+nav a:focus::before,
+footer a:active::before,
+footer a:hover::before,
+footer a:focus::before,
+.button:active,
+.button:hover,
+.button:focus {
+    background-position: 0 0;
 }
 
 .button.secondary:active,
 .button.secondary:hover,
 .button.secondary:focus {
-    background-color: var(--accent-100);
     color: var(--accent-700);
-    border: 0;
 }
 
 *:focus {
     outline: 3px solid var(--accent-500);
-    outline-offset: 3px;
+    outline-offset: 4px;
 }
 
 @supports selector(:focus-visible) {
@@ -317,26 +342,19 @@ footer a:focus {
         color: var(--accent-500);
     }
 
-    nav a:focus-visible,
-    footer a:focus-visible {
-        border-block-end: 3px solid var(--accent-500);
-    }
-
-    .button.primary:focus-visible {
-        background-color: var(--primary-600);
-        color: white;
-        border: 0;
+    nav a:focus-visible::before,
+    footer a:focus-visible::before,
+    .button:focus-visible {
+        background-position: 0 0;
     }
 
     .button.secondary:focus-visible {
-        background-color: var(--accent-100);
         color: var(--accent-700);
-        border: 0;
     }
 
     *:focus-visible {
         outline: 3px solid var(--accent-500);
-        outline-offset: 3px;
+        outline-offset: 4px;
     }
 }
 
@@ -361,5 +379,14 @@ footer a:focus {
 
     .legal ul {
         gap: var(--gap-l);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    nav ul a::before,
+    footer a::before,
+    .button {
+        transition: none;
     }
 }
