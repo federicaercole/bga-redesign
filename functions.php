@@ -14,3 +14,8 @@ function getFooter()
 {
     return require "view/partials/footer.php";
 }
+
+function urlIs($value)
+{
+    return $_SERVER['REQUEST_URI'] === $value;
+}

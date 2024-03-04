@@ -2,9 +2,24 @@
 <?php getNavbar(); ?>
 <main>
     <div class="wrapper">
-        <section class="cta">
+        <section class="centered-layout presentation">
             <h1>The <strong>largest</strong> board game table in the world!</h1>
-            <div>
+            <div class="scroller">
+                <div class="inner-scroller">
+                    <img src="./view/images/seasons.webp" alt="">
+                    <img src="./view/images/carcassonne.webp" alt="">
+                    <img src="./view/images/kingdomino.webp" alt="">
+                    <img src="./view/images/7wonders.webp" alt="">
+                    <img src="./view/images/terra-mystica.webp" alt="">
+                    <img src="./view/images/stone-age.webp" alt="">
+                    <img src="./view/images/azul.webp" alt="">
+                    <img src="./view/images/wingspan.webp" alt="">
+                    <img src="./view/images/splendor.webp" alt="">
+                    <img src="./view/images/ticket-to-ride.webp" alt="">
+                </div>
+            </div>
+
+            <div class="centered-layout">
                 <a class="button primary big" href="/register/">Join for free</a>
                 <span>Already have an account? <a href="/login/">Log in</a></span>
             </div>
@@ -34,7 +49,7 @@
                     You can play in <strong>real-time</strong> or <strong>turn-based</strong>.</p>
             </article>
         </section>
-        <section class="cta">
+        <section class="centered-layout presentation">
             <h2>Start playing now!</h2>
             <a class="button primary big" href="/register/">Join for free</a>
         </section>

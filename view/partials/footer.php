@@ -49,6 +49,9 @@
         </div>
     </div>
 </footer>
+<?php if (UrlIs("/bga/")) : ?>
+    <script src="./view/scripts/scroll.js"></script>
+<?php endif ?>
 </body>
 
 </html>
