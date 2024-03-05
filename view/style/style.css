@@ -125,6 +125,15 @@ strong::before {
     transform: rotate(-2deg);
 }
 
+.visually-hidden {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+}
+
 /*Buttons*/
 .button {
     --button-padding: 2.5rem;
@@ -135,11 +144,13 @@ strong::before {
     background-position: 100% 0;
     background-size: calc(200% + calc(var(--button-padding) * 2)) 100%;
     transition: background-position 0.4s ease-in-out;
+    text-align: center;
 }
 
 .buttons {
     display: flex;
-    gap: var(--gap-s);
+    gap: 1rem;
+    flex-direction: column;
 }
 
 .button.primary {
@@ -170,27 +181,56 @@ strong::before {
 /*Navbar*/
 header {
     background-color: white;
-    display: flex;
-    justify-content: center;
     padding-block: 1rem;
     border-block-end: 1px solid var(--primary-200);
 }
 
-header nav {
+header .wrapper {
     display: flex;
-    gap: var(--gap-m);
-    flex-basis: var(--max-width);
-    align-items: center;
+    gap: var(--gap-s);
+    flex-wrap: wrap;
 }
 
-header nav>ul {
+.logo-container {
     display: flex;
-    gap: var(--gap-m);
-    margin-inline-end: auto;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 100%;
+}
+
+.navigation {
+    display: none;
+}
+
+.navigation>*+* {
+    margin-block-start: var(--block-margin-s);
+}
+
+.navigation.show-menu {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+}
+
+.navigation>ul {
+    display: flex;
+    gap: var(--gap-s);
+    flex-direction: column;
 }
 
 nav li a {
     display: inline-block;
+}
+
+#toggle {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+#toggle svg {
+    width: max(40px, 2em);
+    height: max(40px, 2em);
 }
 
 /*Sections with CTAs*/
@@ -418,6 +458,41 @@ footer a:focus::before,
 
     .legal ul {
         gap: var(--gap-l);
+    }
+
+    #toggle {
+        display: none;
+    }
+
+    .navigation,
+    .navigation.show-menu {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex-basis: 100%;
+    }
+
+    header .wrapper {
+        flex-wrap: nowrap;
+        gap: var(--gap-m)
+    }
+
+    .logo-container {
+        flex-basis: content;
+    }
+
+    .navigation>ul {
+        margin-inline-end: auto;
+        flex-direction: row;
+        gap: var(--gap-m);
+    }
+
+    .buttons {
+        flex-direction: row;
+    }
+
+    .navigation>*+* {
+        margin-block-start: 0;
     }
 }
 

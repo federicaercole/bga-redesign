@@ -52,6 +52,7 @@
 <?php if (UrlIs("/bga/")) : ?>
     <script src="./view/scripts/scroll.js"></script>
 <?php endif ?>
+<script src="./view/scripts/nav.js"></script>
 </body>
 
 </html>
