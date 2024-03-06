@@ -2,7 +2,8 @@
 
 function getHead()
 {
-    return require "view/partials/head.php";
+    require "./config.php";
+    require "view/partials/head.php";
 }
 
 function getNavbar()
@@ -12,7 +13,13 @@ function getNavbar()
 
 function getFooter()
 {
-    return require "view/partials/footer.php";
+    require "./config.php";
+    require "view/partials/footer.php";
+}
+
+function getGameArticle()
+{
+    return require "view/partials/game-article.php";
 }
 
 function urlIs($value)

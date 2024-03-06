@@ -6,16 +6,16 @@
             <h1>The <strong>largest</strong> board game table in the world!</h1>
             <div class="scroller">
                 <div class="inner-scroller">
-                    <img src="./view/images/seasons.webp" alt="">
-                    <img src="./view/images/carcassonne.webp" alt="">
-                    <img src="./view/images/kingdomino.webp" alt="">
-                    <img src="./view/images/7wonders.webp" alt="">
-                    <img src="./view/images/terra-mystica.webp" alt="">
-                    <img src="./view/images/stone-age.webp" alt="">
-                    <img src="./view/images/azul.webp" alt="">
-                    <img src="./view/images/wingspan.webp" alt="">
-                    <img src="./view/images/splendor.webp" alt="">
-                    <img src="./view/images/ticket-to-ride.webp" alt="">
+                    <img src="./assets/images/seasons.webp" alt="">
+                    <img src="./assets/images/carcassonne.webp" alt="">
+                    <img src="./assets/images/kingdomino.webp" alt="">
+                    <img src="./assets/images/7wonders.webp" alt="">
+                    <img src="./assets/images/terra-mystica.webp" alt="">
+                    <img src="./assets/images/stone-age.webp" alt="">
+                    <img src="./assets/images/azul.webp" alt="">
+                    <img src="./assets/images/wingspan.webp" alt="">
+                    <img src="./assets/images/splendor.webp" alt="">
+                    <img src="./assets/images/ticket-to-ride.webp" alt="">
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
                 <span>Already have an account? <a href="/login/">Log in</a></span>
             </div>
         </section>
-        <section class="features">
+        <section class="cards-layout features">
             <article>
                 <h2>Play on all your devices</h2>
                 <p>PC/Mac, smartphones, tablets, gaming console...
