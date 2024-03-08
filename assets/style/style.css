@@ -38,7 +38,8 @@
     --accent-700: #8D0C0C;
     --neutral-200: #E2E8F0;
     --neutral-300: #CBD5E1;
-    --neutral-900: #0F172A;
+    --neutral-400: #94A3B8;
+    --neutral-900: #0f172a;
     --background: #f5f5f5;
 }
 
@@ -298,18 +299,95 @@ nav li a {
 }
 
 .cards-layout article {
+    --radius: 20px;
+    --border: 2px;
     background-color: white;
-    border: 2px solid var(--neutral-200);
-    border-radius: 20px;
+    border: var(--border) solid var(--neutral-200);
+    border-radius: var(--radius);
     padding: 2rem 1.5rem;
-}
-
-.games {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
 article h2 {
     margin-block-end: var(--block-margin-s);
+}
+
+.games {
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+
+.games article {
+    position: relative;
+    padding: 0 0 1rem 0;
+}
+
+.games article .info {
+    display: flex;
+    font-size: var(--fs--1);
+    justify-content: center;
+    gap: var(--gap-m);
+}
+
+.games svg {
+    width: 16px;
+    height: auto;
+    fill: var(--neutral-400);
+}
+
+.games article .info>* {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.games h2 {
+    font-size: var(--fs-2);
+    position: absolute;
+    color: white;
+    top: 1rem;
+    left: 1rem;
+    text-shadow: 0 0 7px var(--neutral-900);
+}
+
+.games img {
+    height: 200px;
+    width: 100%;
+    margin-block-end: 1rem;
+    border-radius: calc(var(--radius) - calc(var(--border) * 2)) calc(var(--radius) - calc(var(--border) * 2)) 0 0;
+    object-fit: cover;
+}
+
+.games article::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 1) 0%, transparent 60%);
+    border-radius: calc(var(--radius) - calc(var(--border) * 2)) calc(var(--radius) - calc(var(--border) * 2)) 0 0;
+}
+
+.easy svg path:not(path:first-of-type) {
+    fill: var(--neutral-200);
+}
+
+.medium svg path:nth-of-type(3) {
+    fill: var(--neutral-200);
+}
+
+.premium {
+    position: absolute;
+    font-size: var(--fs--2);
+    text-transform: uppercase;
+    font-weight: 500;
+    background-color: var(--accent-500);
+    color: white;
+    border-radius: 50px;
+    padding: 0.1rem 1rem;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--accent-100);
+    top: 1.7rem;
+    right: 1rem;
 }
 
 /*Footer*/
