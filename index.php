@@ -1,4 +1,5 @@
 <?php
 
 require "functions.php";
-require "view/index.view.php";
+require "Database.php";
+require "router.php";

@@ -50,9 +50,9 @@
     </div>
 </footer>
 <?php if (UrlIs($siteUri)) : ?>
-    <script src="<?php echo $siteUri ?>assets/scripts/scroll.js"></script>
+    <script src="<?= $siteUri ?>assets/scripts/scroll.js"></script>
 <?php endif ?>
-<script src="<?php echo $siteUri ?>assets/scripts/nav.js"></script>
+<script src="<?= $siteUri ?>assets/scripts/nav.js"></script>
 </body>
 
 </html>

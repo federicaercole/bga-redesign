@@ -17,8 +17,9 @@ function getFooter()
     require "view/partials/footer.php";
 }
 
-function getGameArticle()
+function getGameArticle($game)
 {
+    require "./config.php";
     return require "view/partials/game-article.php";
 }
 
