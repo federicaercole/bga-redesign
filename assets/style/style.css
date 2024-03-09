@@ -7,6 +7,7 @@
 
 :root {
     --max-width: 75rem;
+    --button-radius: 12px;
     --padding-s: clamp(1rem, 3%, 1.5rem);
     --padding-m: clamp(1.5rem, 6%, 3rem);
     --padding-l: clamp(3rem, 12%, 6rem);
@@ -25,6 +26,7 @@
     --fs-3: clamp(1.728rem, 1.2797rem + 2.2413vi, 2.9607rem);
     --fs-4: clamp(2.0736rem, 1.3925rem + 3.4056vi, 3.9467rem);
     --fs-5: clamp(2.4883rem, 1.4801rem + 5.0411vi, 5.2609rem);
+    --primary-50: #F8FAFC;
     --primary-100: #d5e1f6;
     --primary-200: #ACC3EC;
     --primary-300: #82A6E3;
@@ -61,6 +63,14 @@ img {
     display: block;
 }
 
+button {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+
 /*General styles*/
 body {
     display: grid;
@@ -72,12 +82,9 @@ body {
     color: var(--neutral-900);
 }
 
-body>*+* {
-    margin-block-start: var(--block-margin-m);
-}
-
+body>*+*,
 section+section {
-    margin-block-start: var(--block-margin-xl);
+    margin-block-start: var(--block-margin-m);
 }
 
 .wrapper {
@@ -136,11 +143,12 @@ strong::before {
 }
 
 /*Buttons*/
-.button {
+.button,
+.search button {
     --button-padding: 2.5rem;
     padding-block: 0.5rem;
     padding-inline: var(--button-padding);
-    border-radius: 12px;
+    border-radius: var(--button-radius);
     text-decoration: none;
     background-position: 100% 0;
     background-size: calc(200% + calc(var(--button-padding) * 2)) 100%;
@@ -177,6 +185,60 @@ strong::before {
 .big {
     font-size: var(--fs-1);
     font-weight: 600;
+}
+
+.search .button,
+.search button {
+    --button-padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-600);
+    color: white;
+    background-image: linear-gradient(to left,
+            transparent,
+            transparent 50%,
+            var(--accent-600) 50%,
+            var(--accent-600));
+}
+
+.search .buttons {
+    flex-direction: row;
+}
+
+.button svg,
+.search button svg {
+    width: 24px;
+    height: auto;
+    fill: white;
+}
+
+.search form button {
+    border-radius: 0 var(--button-radius) var(--button-radius) 0;
+}
+
+/*Search bar*/
+.search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-s);
+    justify-content: space-between;
+}
+
+.search input {
+    border-radius: var(--button-radius) 0 0 var(--button-radius);
+    font-family: inherit;
+    font-size: inherit;
+    border: 3px solid var(--primary-300);
+    padding-inline: 0.5rem;
+    width: 100%;
+    background-color: var(--primary-50);
+}
+
+.search form {
+    display: flex;
+    flex-basis: 600px;
+    border-radius: var(--button-radius);
 }
 
 /*Navbar*/
@@ -266,6 +328,11 @@ nav li a {
     margin-block-end: var(--block-margin-l);
 }
 
+.presentation+*,
+*+.presentation {
+    margin-block-start: var(--block-margin-xl);
+}
+
 /*Infinite scrolling on the homepage*/
 .scroller {
     max-width: calc(100vw - 1rem);
@@ -294,7 +361,7 @@ nav li a {
 /*Cards*/
 .cards-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
     gap: var(--gap-m);
 }
 
@@ -478,7 +545,10 @@ footer a:hover::before,
 footer a:focus::before,
 .button:active,
 .button:hover,
-.button:focus {
+.button:focus,
+button:active,
+button:hover,
+button:focus {
     background-position: 0 0;
 }
 
@@ -491,6 +561,7 @@ footer a:focus::before,
 *:focus {
     outline: 3px solid var(--accent-500);
     outline-offset: 4px;
+    z-index: 1;
 }
 
 @supports selector(:focus-visible) {
@@ -504,7 +575,8 @@ footer a:focus::before,
 
     nav a:focus-visible::before,
     footer a:focus-visible::before,
-    .button:focus-visible {
+    .button:focus-visible,
+    button:focus-visible {
         background-position: 0 0;
     }
 
@@ -515,11 +587,12 @@ footer a:focus::before,
     *:focus-visible {
         outline: 3px solid var(--accent-500);
         outline-offset: 4px;
+        z-index: 1;
     }
 }
 
 /*Media queries*/
-@media screen and (min-width:800px) {
+@media screen and (min-width:850px) {
     footer .wrapper {
         grid-template-columns: minmax(260px, 2fr) repeat(3, minmax(0, 1fr));
     }
@@ -581,7 +654,8 @@ footer a:focus::before,
 
     nav ul a::before,
     footer a::before,
-    .button {
+    .button,
+    button {
         transition: none;
     }
 
