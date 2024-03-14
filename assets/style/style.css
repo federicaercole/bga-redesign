@@ -243,11 +243,11 @@ strong::before {
 }
 
 /*Filters modal*/
-
 .fixed-layout {
     position: fixed;
     width: 100%;
     top: 0;
+    background-attachment: fixed;
 }
 
 .filters {
@@ -259,7 +259,8 @@ strong::before {
     font-size: var(--fs--1);
 }
 
-.filters.show {
+.filters.show,
+.dropdown.show {
     display: block;
 }
 
@@ -280,11 +281,11 @@ strong::before {
     flex-direction: column;
     overflow: auto;
     max-height: 325px;
-    padding-inline: 1rem;
+    padding: 0.5rem 1rem;
 }
 
 .filters li button,
-.filters .close {
+.filters #close {
     display: flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
@@ -292,6 +293,10 @@ strong::before {
     gap: 0.5rem;
     border: 2px solid transparent;
     width: 100%;
+}
+
+button[aria-expanded="true"] svg:not(.icon) {
+    transform: rotate(180deg);
 }
 
 .filters li span {
@@ -314,16 +319,37 @@ strong::before {
 }
 
 .filters .buttons {
-    margin: 1rem 1rem 0 1rem;
+    padding-block-start: 0.5rem;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.filters .close {
+.filters #close {
     align-self: flex-end;
     margin: 0 1rem 1rem 0;
     width: auto;
+}
+
+/*Dropdown filters*/
+
+.dropdown {
+    display: none;
+    padding: 0.5rem;
+}
+
+.dropdown ul li button {
+    width: 100%;
+}
+
+.dropdown .selected {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+.dropdown .selected svg {
+    margin-inline-start: 0;
+    fill: var(--primary-700);
 }
 
 /*Navbar*/
@@ -354,7 +380,7 @@ header .wrapper {
     margin-block-start: var(--block-margin-s);
 }
 
-.navigation.show-menu {
+.navigation.show {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -370,13 +396,13 @@ nav li a {
     display: inline-block;
 }
 
-#toggle {
+#menu {
     background-color: transparent;
     border: 0;
     cursor: pointer;
 }
 
-#toggle svg {
+#menu svg {
     width: max(40px, 2em);
     height: max(40px, 2em);
 }
@@ -592,7 +618,7 @@ a {
 
 a:active,
 a:hover,
-a:focus {
+a:focus-visible {
     color: var(--accent-500);
 }
 
@@ -624,35 +650,35 @@ footer a::before {
 
 nav a:active::before,
 nav a:hover::before,
-nav a:focus::before,
+nav a:focus-visible::before,
 footer a:active::before,
 footer a:hover::before,
-footer a:focus::before,
+footer a:focus-visible::before,
 .button:active,
 .button:hover,
-.button:focus,
+.button:focus-visible,
 button:active,
 button:hover,
-button:focus {
+button:focus-visible {
     background-position: 0 0;
 }
 
 .filters button:not(.neutral):hover,
 .filters button:not(.neutral):active,
-.filters button:not(.neutral):focus {
+.filters button:not(.neutral):focus-visible {
     border-color: var(--neutral-600);
     color: var(--neutral-900);
 }
 
-.filters button:hover svg,
-.filters button:active svg,
-.filters button:focus svg {
+.filters button:not(.selected):hover svg,
+.filters button:not(.selected):active svg,
+.filters button:not(.selected):focus-visible svg {
     fill: var(--neutral-600);
 }
 
 .button.secondary:active,
 .button.secondary:hover,
-.button.secondary:focus {
+.button.secondary:focus-visible {
     color: var(--accent-700);
 }
 
@@ -662,33 +688,23 @@ button:focus {
     z-index: 1;
 }
 
+.filters .dropdown .selected:hover,
+.filters .dropdown .selected:active,
+.filters .dropdown .selected:focus-visible {
+    background-color: var(--accent-100);
+    border-color: transparent;
+    color: var(--accent-700);
+}
+
+.filters .dropdown .selected:hover svg,
+.filters .dropdown .selected:active svg,
+.filters .dropdown .selected:focus-visible svg {
+    fill: var(--accent-700);
+}
+
 @supports selector(:focus-visible) {
     *:focus {
         outline: 0;
-    }
-
-    a:focus-visible {
-        color: var(--accent-500);
-    }
-
-    nav a:focus-visible::before,
-    footer a:focus-visible::before,
-    .button:focus-visible,
-    button:focus-visible {
-        background-position: 0 0;
-    }
-
-    .button.secondary:focus-visible {
-        color: var(--accent-700);
-    }
-
-    .filters button:not(.neutral):focus-visible {
-        border-color: var(--neutral-600);
-        color: var(--neutral-900);
-    }
-
-    .filters button:focus-visible svg {
-        fill: var(--neutral-600);
     }
 
     *:focus-visible {
@@ -721,12 +737,12 @@ button:focus {
         gap: var(--gap-l);
     }
 
-    #toggle {
+    #menu {
         display: none;
     }
 
     .navigation,
-    .navigation.show-menu {
+    .navigation.show {
         display: flex;
         align-items: center;
         flex-direction: row;
@@ -777,7 +793,6 @@ button:focus {
 
     .filters .wrapper>ul {
         flex-direction: row;
-        padding-inline: 0;
         justify-content: space-between;
     }
 
@@ -785,11 +800,7 @@ button:focus {
         width: auto;
     }
 
-    .filters .buttons {
-        margin-block-start: 1rem;
-    }
-
-    .filters .close {
+    .filters #close {
         display: none;
     }
 }
