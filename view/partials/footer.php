@@ -52,7 +52,7 @@
 <?php if (UrlIs($siteUri)) : ?>
     <script src="<?= $siteUri ?>assets/scripts/scroll.js"></script>
 <?php endif ?>
-<script src="<?= $siteUri ?>assets/scripts/nav.js"></script>
+<script src="<?= $siteUri ?>assets/scripts/index.js" type="module"></script>
 </body>
 
 </html>
