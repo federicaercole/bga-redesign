@@ -1,3 +1,5 @@
+const modal = document.querySelector(".filters");
+
 const navMenu = {
     btn: document.querySelector("#menu"),
     menu: document.querySelector(".navigation"),
@@ -24,7 +26,7 @@ const closeFilterBtn = {
 const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-haspopup="true"]')].map(function (node) {
     return {
         btn: node,
-        menu: node.nextElementSibling,
+        menu: node.parentElement.nextElementSibling,
         click() { return toggleMenu(this) }
     };
 });
@@ -67,7 +69,12 @@ export function toggleFixedLayoutBody() {
     const maxWidth = 1100;
     const isMenuOpened = filterBtn.btn.getAttribute("aria-expanded") === "true";
     isMenuOpened && window.innerWidth < maxWidth ? body.classList.add("fixed-layout") : body.classList.remove("fixed-layout");
-    isMenuOpened && window.innerWidth < maxWidth ? window.addEventListener("keydown", focusTrap) : window.removeEventListener("keydown", focusTrap);
+    if (isMenuOpened && window.innerWidth < maxWidth) {
+        closeFilterBtn.btn.focus();
+        modal.addEventListener("keydown", focusTrap)
+    } else {
+        modal.removeEventListener("keydown", focusTrap);
+    }
 }
 
 function checkIfItemExistsInDOM(item) {
@@ -76,7 +83,6 @@ function checkIfItemExistsInDOM(item) {
 }
 
 function focusTrap(event) {
-    const modal = document.querySelector(".filters");
     const firstFocusableElement = modal.querySelectorAll("button")[0];
     const focusableContent = modal.querySelectorAll("button");
     const lastFocusableElement = focusableContent[focusableContent.length - 1];

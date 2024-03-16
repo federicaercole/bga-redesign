@@ -52,6 +52,8 @@
 *::before {
     margin: 0;
     box-sizing: border-box;
+    border: 0;
+    padding: 0;
 }
 
 ul {
@@ -67,7 +69,6 @@ img {
 button {
     cursor: pointer;
     background-color: transparent;
-    border: 0;
     font-family: inherit;
     font-size: inherit;
 }
@@ -296,8 +297,8 @@ input[type="checkbox"]:checked {
     font-size: var(--fs--1);
 }
 
-.filters li {
-    flex-basis: 200px;
+.filters legend {
+    width: 100%;
 }
 
 .filters.show,
@@ -317,16 +318,16 @@ input[type="checkbox"]:checked {
     flex-direction: column;
 }
 
-.filters .wrapper>ul {
+.filters .scrollable {
     display: flex;
     gap: var(--gap-s);
     flex-direction: column;
+    padding: 0.5rem 1rem;
     overflow: auto;
     max-height: 325px;
-    padding: 0.5rem 1rem;
 }
 
-.filters li button,
+.filters legend button,
 .filters #close {
     display: flex;
     align-items: center;
@@ -341,7 +342,7 @@ button[aria-expanded="true"] svg:not(.icon) {
     transform: rotate(180deg);
 }
 
-.filters li span {
+.filters legend span {
     background-color: var(--primary-100);
     color: var(--primary-600);
     padding: 0.25rem 0.5rem;
@@ -364,7 +365,6 @@ button[aria-expanded="true"] svg:not(.icon) {
     padding-block-start: 0.5rem;
     flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 .filters #close {
@@ -374,7 +374,6 @@ button[aria-expanded="true"] svg:not(.icon) {
 }
 
 /*Dropdown filters*/
-
 .dropdown {
     display: none;
     padding: 0.5rem;
@@ -436,7 +435,6 @@ nav li a {
 
 #menu {
     background-color: transparent;
-    border: 0;
     cursor: pointer;
 }
 
@@ -815,8 +813,9 @@ button:focus-visible {
         border: 0;
     }
 
-    .filters .wrapper>ul {
+    .filters .scrollable {
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
     }
 
@@ -825,8 +824,8 @@ button:focus-visible {
         overflow: auto;
     }
 
-    .filters li button {
-        width: auto;
+    .filters fieldset {
+        flex-basis: 180px;
     }
 
     .filters #close {
