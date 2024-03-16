@@ -21,7 +21,15 @@ const closeFilterBtn = {
     click() { return toggleMenu(this) },
 }
 
-const buttons = [navMenu, filterBtn, closeFilterBtn];
+const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-haspopup="true"]')].map(function (node) {
+    return {
+        btn: node,
+        menu: node.nextElementSibling,
+        click() { return toggleMenu(this) }
+    };
+});
+
+const buttons = [navMenu, filterBtn, closeFilterBtn, ...filterDropdownBtns];
 
 function toggleMenu(menu) {
     return function openOrCloseMenu() {
@@ -56,7 +64,7 @@ export function manageBtnEvents() {
 
 export function toggleFixedLayoutBody() {
     const body = document.querySelector("body");
-    const maxWidth = 1000;
+    const maxWidth = 1100;
     const isMenuOpened = filterBtn.btn.getAttribute("aria-expanded") === "true";
     isMenuOpened && window.innerWidth < maxWidth ? body.classList.add("fixed-layout") : body.classList.remove("fixed-layout");
     isMenuOpened && window.innerWidth < maxWidth ? window.addEventListener("keydown", focusTrap) : window.removeEventListener("keydown", focusTrap);

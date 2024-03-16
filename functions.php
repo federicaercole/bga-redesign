@@ -27,3 +27,8 @@ function urlIs($value)
 {
     return $_SERVER['REQUEST_URI'] === $value;
 }
+
+function createSlug($string)
+{
+    return preg_replace('#[ -]+#', '-', strtolower($string));
+}

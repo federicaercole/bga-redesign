@@ -7,7 +7,7 @@
 
 :root {
     --max-width: 75rem;
-    --button-radius: 12px;
+    --button-radius: 10px;
     --padding-s: clamp(1rem, 3%, 1.5rem);
     --padding-m: clamp(1.5rem, 6%, 3rem);
     --padding-l: clamp(3rem, 12%, 6rem);
@@ -218,7 +218,7 @@ strong::before {
     border-radius: 0 var(--button-radius) var(--button-radius) 0;
 }
 
-/*Search bar*/
+/*Input style*/
 .search {
     display: flex;
     flex-wrap: wrap;
@@ -226,14 +226,51 @@ strong::before {
     justify-content: space-between;
 }
 
-.search input {
-    border-radius: var(--button-radius) 0 0 var(--button-radius);
+input {
+    border-radius: var(--button-radius);
     font-family: inherit;
     font-size: inherit;
-    border: 2px solid var(--primary-200);
+    border: 2px solid var(--primary-600);
     padding-inline: 0.5rem;
-    width: 100%;
     background-color: var(--primary-50);
+}
+
+.dropdown input[type="number"] {
+    width: 80px;
+    height: 40px;
+    appearance: textfield;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    padding: 0;
+    border-color: var(--primary-600);
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    transform: scale(0);
+    box-shadow: inset 1.5em 1.5em var(--primary-600);
+    clip-path: polygon(47.395% 100%, 19.107% 68.333%, 26.179% 60.417%, 47.395% 84.167%, 92.928% 33.194%, 100% 41.111%, 47.395% 100%);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--primary-100);
+}
+
+.search input {
+    border-radius: var(--button-radius) 0 0 var(--button-radius);
+    width: 100%;
+    border-color: var(--primary-200);
 }
 
 .search form {
@@ -259,9 +296,14 @@ strong::before {
     font-size: var(--fs--1);
 }
 
+.filters li {
+    flex-basis: 200px;
+}
+
 .filters.show,
 .dropdown.show {
-    display: block;
+    display: grid;
+    gap: 0.5rem;
 }
 
 .filters .wrapper {
@@ -342,14 +384,10 @@ button[aria-expanded="true"] svg:not(.icon) {
     width: 100%;
 }
 
-.dropdown .selected {
-    background-color: var(--primary-100);
-    color: var(--primary-700);
-}
-
-.dropdown .selected svg {
-    margin-inline-start: 0;
-    fill: var(--primary-700);
+.dropdown>div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /*Navbar*/
@@ -670,9 +708,9 @@ button:focus-visible {
     color: var(--neutral-900);
 }
 
-.filters button:not(.selected):hover svg,
-.filters button:not(.selected):active svg,
-.filters button:not(.selected):focus-visible svg {
+.filters button:hover svg,
+.filters button:active svg,
+.filters button:focus-visible svg {
     fill: var(--neutral-600);
 }
 
@@ -686,20 +724,6 @@ button:focus-visible {
     outline: 3px solid var(--accent-500);
     outline-offset: 4px;
     z-index: 1;
-}
-
-.filters .dropdown .selected:hover,
-.filters .dropdown .selected:active,
-.filters .dropdown .selected:focus-visible {
-    background-color: var(--accent-100);
-    border-color: transparent;
-    color: var(--accent-700);
-}
-
-.filters .dropdown .selected:hover svg,
-.filters .dropdown .selected:active svg,
-.filters .dropdown .selected:focus-visible svg {
-    fill: var(--accent-700);
 }
 
 @supports selector(:focus-visible) {
@@ -773,7 +797,7 @@ button:focus-visible {
     }
 }
 
-@media screen and (min-width:1000px) {
+@media screen and (min-width:1100px) {
 
     .fixed-layout {
         position: static;
@@ -794,6 +818,11 @@ button:focus-visible {
     .filters .wrapper>ul {
         flex-direction: row;
         justify-content: space-between;
+    }
+
+    .dropdown.show {
+        max-height: 250px;
+        overflow: auto;
     }
 
     .filters li button {
