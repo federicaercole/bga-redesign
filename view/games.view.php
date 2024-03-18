@@ -40,7 +40,7 @@
                             </button></legend>
                         <div class="dropdown">
                             <label for="players">Max number of players</label>
-                            <input type="number" id="players" min="1" step="1">
+                            <input type="number" id="players" min="1" step="1" name="players">
                         </div>
                     </fieldset>
                     <fieldset>
@@ -55,7 +55,7 @@
                         </legend>
                         <div class="dropdown">
                             <label for="time">Max playing time (in minutes)</label>
-                            <input type="number" id="time" min="1" step="1">
+                            <input type="number" id="time" min="1" step="1" name="time">
                         </div>
                     </fieldset>
                     <fieldset>
@@ -72,17 +72,17 @@
                             </button></legend>
                         <div class="dropdown">
                             <div>
-                                <input type="checkbox" id="easy" value="easy" name="complexity[]">
+                                <input type="checkbox" id="easy" value="easy" name="complexity[]" <?php checkChoice("complexity", "easy") ?>>
                                 <label for="easy">Easy</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="medium" value="medium" name="complexity[]">
+                                <input type="checkbox" id="medium" value="medium" name="complexity[]" <?php checkChoice("complexity", "medium") ?>>
                                 <label for="medium">Medium</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="hard" value="hard" name="complexity[]">
+                                <input type="checkbox" id="hard" value="hard" name="complexity[]" <?php checkChoice("complexity", "hard") ?>>
                                 <label for="hard">Hard</label>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                         <div class="dropdown">
                             <?php foreach ($mechanisms as $mechanism) : ?>
                                 <div>
-                                    <input type="checkbox" value="<?= createSlug($mechanism["name"]) ?>" id="<?= createSlug($mechanism["name"]) ?>" name="mechanism[]">
+                                    <input type="checkbox" value="<?= createSlug($mechanism["name"]) ?>" id="<?= createSlug($mechanism["name"]) ?>" name="mechanism[]" <?php checkChoice("mechanism", createSlug($mechanism["name"])) ?>>
                                     <label for="<?= createSlug($mechanism["name"]) ?>"><?= $mechanism["name"] ?></label>
                                 </div>
                             <?php endforeach ?>
@@ -119,7 +119,7 @@
                         <div class="dropdown">
                             <?php foreach ($themes as $theme) : ?>
                                 <div>
-                                    <input type="checkbox" value="<?= createSlug($theme["name"]) ?>" id="<?= createSlug($theme["name"]) ?>" name="theme[]">
+                                    <input type="checkbox" value="<?= createSlug($theme["name"]) ?>" id="<?= createSlug($theme["name"]) ?>" name="theme[]" <?php checkChoice("the", createSlug($theme["name"])) ?>>
                                     <label for="<?= createSlug($theme["name"]) ?>"><?= $theme["name"] ?></label>
                                 </div>
                             <?php endforeach ?>
@@ -127,7 +127,7 @@
                     </fieldset>
                 </div>
                 <div class="buttons">
-                    <button type=" button" class="button neutral secondary">Clear filters</button>
+                    <button type="button" class="button neutral secondary" id="clear">Clear filters</button>
                     <button type="submit" class="button neutral">Filter results</button>
                 </div>
             </form>

@@ -23,6 +23,11 @@ const closeFilterBtn = {
     click() { return toggleMenu(this) },
 }
 
+const clearFiltersBtn = {
+    btn: document.querySelector("#clear"),
+    click() { return clearInputs },
+}
+
 const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-haspopup="true"]')].map(function (node) {
     return {
         btn: node,
@@ -31,7 +36,14 @@ const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-h
     };
 });
 
-const buttons = [navMenu, filterBtn, closeFilterBtn, ...filterDropdownBtns];
+const buttons = [navMenu, filterBtn, closeFilterBtn, clearFiltersBtn, ...filterDropdownBtns];
+
+function clearInputs() {
+    const filters = document.querySelector(".filters");
+    [...filters.querySelectorAll('input[type="number"]')].map(item => item.value = "");
+    [...filters.querySelectorAll('input[type="checkbox"]')].map(item => item.checked = false);
+    window.history.replaceState(null, '', window.location.pathname);
+}
 
 function toggleMenu(menu) {
     return function openOrCloseMenu() {
