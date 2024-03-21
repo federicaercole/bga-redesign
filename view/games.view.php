@@ -39,8 +39,8 @@
                                 </svg>
                             </button></legend>
                         <div class="dropdown">
-                            <label for="players">Max number of players</label>
-                            <input type="number" id="players" min="1" step="1" name="players">
+                            <label for="players">Number of players</label>
+                            <input type="number" id="players" min="1" step="1" name="players" value="<?= $_GET["players"] ?? "" ?>">
                         </div>
                     </fieldset>
                     <fieldset>
@@ -55,7 +55,7 @@
                         </legend>
                         <div class="dropdown">
                             <label for="time">Max playing time (in minutes)</label>
-                            <input type="number" id="time" min="1" step="1" name="time">
+                            <input type="number" id="time" min="1" step="1" name="time" value="<?= $_GET["time"] ?? "" ?>">
                         </div>
                     </fieldset>
                     <fieldset>
@@ -100,7 +100,7 @@
                         <div class="dropdown">
                             <?php foreach ($mechanisms as $mechanism) : ?>
                                 <div>
-                                    <input type="checkbox" value="<?= createSlug($mechanism["name"]) ?>" id="<?= createSlug($mechanism["name"]) ?>" name="mechanism[]" <?php checkChoice("mechanism", createSlug($mechanism["name"])) ?>>
+                                    <input type="checkbox" value="<?= $mechanism["id"] ?>" id="<?= createSlug($mechanism["name"]) ?>" name="mechanism[]" <?php checkChoice("mechanism", $mechanism["id"]) ?>>
                                     <label for="<?= createSlug($mechanism["name"]) ?>"><?= $mechanism["name"] ?></label>
                                 </div>
                             <?php endforeach ?>
@@ -119,7 +119,7 @@
                         <div class="dropdown">
                             <?php foreach ($themes as $theme) : ?>
                                 <div>
-                                    <input type="checkbox" value="<?= createSlug($theme["name"]) ?>" id="<?= createSlug($theme["name"]) ?>" name="theme[]" <?php checkChoice("the", createSlug($theme["name"])) ?>>
+                                    <input type="checkbox" value="<?= $theme["id"] ?>" id="<?= createSlug($theme["name"]) ?>" name="theme[]" <?php checkChoice("theme", $theme["id"]) ?>>
                                     <label for="<?= createSlug($theme["name"]) ?>"><?= $theme["name"] ?></label>
                                 </div>
                             <?php endforeach ?>
