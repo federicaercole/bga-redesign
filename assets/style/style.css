@@ -57,7 +57,6 @@
 }
 
 ul {
-    padding: 0;
     list-style: none;
 }
 
@@ -144,6 +143,12 @@ strong::before {
     height: 1px;
 }
 
+svg {
+    width: 24px;
+    height: auto;
+    fill: currentColor;
+}
+
 /*Buttons*/
 .button {
     --button-padding: 2.5rem;
@@ -208,11 +213,10 @@ strong::before {
     flex-direction: row;
 }
 
-.button svg,
-.filters svg {
-    width: 24px;
-    height: auto;
-    fill: white;
+.button.tertiary {
+    background-color: transparent;
+    color: var(--primary-600);
+    background-image: none;
 }
 
 .search form button {
@@ -328,7 +332,7 @@ input[type="checkbox"]:checked {
 }
 
 .filters legend button,
-.filters #close {
+#close {
     display: flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
@@ -342,6 +346,11 @@ button[aria-expanded="true"] svg:not(.icon) {
     transform: rotate(180deg);
 }
 
+.icon {
+    width: 16px;
+    fill: var(--neutral-400);
+}
+
 .filters legend span {
     background-color: var(--primary-100);
     color: var(--primary-600);
@@ -351,14 +360,7 @@ button[aria-expanded="true"] svg:not(.icon) {
 }
 
 .filters svg:not(.icon) {
-    fill: var(--neutral-900);
     margin-inline-start: auto;
-}
-
-.filters .icon {
-    fill: var(--neutral-400);
-    width: 16px;
-    height: auto;
 }
 
 .filters .buttons {
@@ -367,26 +369,54 @@ button[aria-expanded="true"] svg:not(.icon) {
     justify-content: center;
 }
 
-.filters #close {
+#close {
     align-self: flex-end;
     margin: 0 1rem 1rem 0;
     width: auto;
 }
 
-/*Dropdown filters*/
+.sort {
+    z-index: 2;
+    position: relative;
+}
+
+.sort .dropdown {
+    font-size: var(--fs--1);
+    position: absolute;
+    background-color: white;
+    border: 1px solid var(--primary-200);
+    padding: 0;
+    margin-block-start: 1rem;
+}
+
+/*Dropdown menus*/
 .dropdown {
     display: none;
     padding: 0.5rem;
 }
 
-.dropdown ul li button {
-    width: 100%;
-}
-
-.dropdown>div {
+.dropdown li {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.selected {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+#sort-menu {
+    gap: 0;
+}
+
+#sort-menu li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.dropdown li:not(.selected) svg {
+    fill: var(--neutral-400);
 }
 
 /*Navbar*/
@@ -541,12 +571,6 @@ article h2 {
     gap: var(--gap-m);
 }
 
-.games svg {
-    width: 16px;
-    height: auto;
-    fill: var(--neutral-400);
-}
-
 .games article .info>* {
     display: flex;
     align-items: center;
@@ -581,10 +605,7 @@ article h2 {
     border-radius: calc(var(--radius) - calc(var(--border) * 2)) calc(var(--radius) - calc(var(--border) * 2)) 0 0;
 }
 
-.easy svg path:not(path:first-of-type) {
-    fill: var(--neutral-200);
-}
-
+.easy svg path:not(path:first-of-type),
 .medium svg path:nth-of-type(3) {
     fill: var(--neutral-200);
 }
@@ -684,38 +705,52 @@ footer a::before {
     transition: background-position 0.4s ease-in-out;
 }
 
-nav a:active::before,
-nav a:hover::before,
-nav a:focus-visible::before,
-footer a:active::before,
-footer a:hover::before,
-footer a:focus-visible::before,
+a:active::before,
+a:hover::before,
+a:focus-visible::before,
 .button:active,
 .button:hover,
-.button:focus-visible,
-button:active,
-button:hover,
-button:focus-visible {
+.button:focus-visible {
     background-position: 0 0;
-}
-
-.filters button:not(.neutral):hover,
-.filters button:not(.neutral):active,
-.filters button:not(.neutral):focus-visible {
-    border-color: var(--neutral-600);
-    color: var(--neutral-900);
-}
-
-.filters button:hover svg,
-.filters button:active svg,
-.filters button:focus-visible svg {
-    fill: var(--neutral-600);
 }
 
 .button.secondary:active,
 .button.secondary:hover,
 .button.secondary:focus-visible {
     color: var(--accent-700);
+}
+
+.button.tertiary:active,
+.button.tertiary:hover,
+.button.tertiary:focus-visible {
+    background-color: var(--primary-600);
+    color: white;
+}
+
+#sort-menu li:hover,
+#sort-menu li:active,
+#sort-menu li:focus-visible,
+.filters button:not(.neutral):hover,
+.filters button:not(.neutral):active,
+.filters button:not(.neutral):focus-visible {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+#sort-menu .selected:hover,
+#sort-menu .selected:active,
+#sort-menu .selected:focus-visible {
+    background-color: var(--accent-100);
+    color: var(--accent-700);
+}
+
+button:hover svg,
+button:active svg,
+button:focus-visible svg,
+.dropdown li:hover svg,
+.dropdown li:active svg,
+.dropdown li:focus-visible svg {
+    fill: currentColor;
 }
 
 *:focus {
@@ -803,7 +838,7 @@ button:focus-visible {
     }
 
     .filters {
-        margin-block-start: var(--block-margin-s);
+        margin-block-start: 1rem;
         background-color: white;
         border-block: 1px solid var(--primary-200);
     }
@@ -828,17 +863,15 @@ button:focus-visible {
         flex-basis: 180px;
     }
 
-    .filters #close {
+    #close {
         display: none;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-    nav ul a::before,
-    footer a::before,
-    .button,
-    button {
+    a::before,
+    .button {
         transition: none;
     }
 
