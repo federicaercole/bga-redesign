@@ -5,9 +5,16 @@ $db = new Database($config);
 
 function checkChoice($inputName, $value)
 {
-    $selectedCheckboxes = $_GET[$inputName] ?? '';
-    if (!empty($selectedCheckboxes) && in_array($value, $selectedCheckboxes)) {
-        echo "checked";
+    $selectedChoices = $_GET[$inputName] ?? '';
+    if (is_array($selectedChoices)) {
+        if (!empty($selectedChoices) && in_array($value, $selectedChoices)) {
+            echo "checked";
+            return;
+        }
+    } else {
+        if ($selectedChoices == $value) {
+            echo "selected";
+        }
     }
 }
 
@@ -56,11 +63,29 @@ function getFilterExpression()
         $expression .= " WHERE " . implode(" AND ", $whereClauses);
     }
 
+    if (!isset($_GET["sort"])) {
+        $expression .= " ORDER BY date_added DESC";
+    } else {
+        switch ($_GET["sort"]) {
+            case "ascending":
+                $expression .= " ORDER BY title ASC";
+                break;
+            case "descending":
+                $expression .= " ORDER BY title DESC";
+                break;
+            case "popular":
+                $expression .= " ORDER BY number_of_games DESC";
+                break;
+            default:
+                $expression .= " ORDER BY date_added DESC";
+        }
+    }
+
     return ['expression' => $expression, 'params' => $params];
 }
 
 ['expression' => $expression, 'params' => $params] = getFilterExpression();
-$query = "SELECT DISTINCT title, min_players, max_players, time, complexity, premium, cover_image FROM games " . $expression;
+$query = "SELECT DISTINCT title, min_players, max_players, time, complexity, premium, cover_image, date_added, number_of_games FROM games " . $expression;
 
 $games = $db->query($query, $params)->fetchAll();
 $mechanisms = $db->query("SELECT * FROM mechanisms")->fetchAll();

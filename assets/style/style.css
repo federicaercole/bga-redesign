@@ -401,18 +401,20 @@ button[aria-expanded="true"] svg:not(.icon) {
     gap: 0.5rem;
 }
 
-.selected {
+.dropdown a {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+}
+
+.selected a {
     background-color: var(--primary-100);
     color: var(--primary-700);
 }
 
 #sort-menu {
     gap: 0;
-}
-
-#sort-menu li {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
 }
 
 .dropdown li:not(.selected) svg {
@@ -680,7 +682,8 @@ a:focus-visible {
 }
 
 nav a,
-footer a {
+footer a,
+#sort-menu a {
     font-weight: 400;
     text-decoration: none;
     position: relative;
@@ -727,9 +730,9 @@ a:focus-visible::before,
     color: white;
 }
 
-#sort-menu li:hover,
-#sort-menu li:active,
-#sort-menu li:focus-visible,
+#sort-menu a:hover,
+#sort-menu a:active,
+#sort-menu a:focus-visible,
 .filters button:not(.neutral):hover,
 .filters button:not(.neutral):active,
 .filters button:not(.neutral):focus-visible {
@@ -737,9 +740,9 @@ a:focus-visible::before,
     color: var(--primary-700);
 }
 
-#sort-menu .selected:hover,
-#sort-menu .selected:active,
-#sort-menu .selected:focus-visible {
+#sort-menu .selected a:hover,
+#sort-menu .selected a:active,
+#sort-menu .selected a:focus-visible {
     background-color: var(--accent-100);
     color: var(--accent-700);
 }
@@ -747,9 +750,9 @@ a:focus-visible::before,
 button:hover svg,
 button:active svg,
 button:focus-visible svg,
-.dropdown li:hover svg,
-.dropdown li:active svg,
-.dropdown li:focus-visible svg {
+.dropdown a:hover svg,
+.dropdown a:active svg,
+.dropdown a:focus-visible svg {
     fill: currentColor;
 }
 
