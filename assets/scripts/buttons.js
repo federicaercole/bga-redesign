@@ -8,12 +8,12 @@ const navMenu = {
     click() { return toggleMenu(this) },
 };
 
-const filterBtn = {
+export const filterBtn = {
     btn: document.querySelector("#filter"),
     menu: document.querySelector(".filters"),
     textWhenOpened: "Close filter",
     textWhenClosed: "Filter",
-    click() { return toggleMenu(this) },
+    click() { return manageMenu(this) },
 };
 
 const closeFilterBtn = {
@@ -28,6 +28,16 @@ const clearFiltersBtn = {
     click() { return clearInputs },
 }
 
+const sortMenu = {
+    btn: document.querySelector("#sort"),
+    menu: document.querySelector("#sort-menu"),
+    options: [...document.querySelectorAll("#sort-menu li")],
+    optionIndex: 0,
+    increaseIndex() { return this.optionIndex++ },
+    decreaseIndex() { return this.optionIndex-- },
+    click() { return manageMenu(this) },
+};
+
 const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-haspopup="true"]')].map(function (node) {
     return {
         btn: node,
@@ -36,13 +46,59 @@ const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-h
     };
 });
 
-const buttons = [navMenu, filterBtn, closeFilterBtn, clearFiltersBtn, ...filterDropdownBtns];
+const buttons = [navMenu, filterBtn, closeFilterBtn, clearFiltersBtn, ...filterDropdownBtns, sortMenu];
 
 function clearInputs() {
     const filters = document.querySelector(".filters");
     [...filters.querySelectorAll('input[type="number"]')].map(item => item.value = "");
     [...filters.querySelectorAll('input[type="checkbox"]')].map(item => item.checked = false);
-    window.history.replaceState(null, '', window.location.pathname);
+    history.replaceState(null, '', window.location.pathname);
+    location.reload();
+}
+
+function handleKeysSortMenu(event) {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        selectElement(false);
+        const firstSelectableElementIndex = 0;
+        const lastSelectableElementIndex = sortMenu.options.length - 1;
+        if (event.key === "ArrowDown") {
+            sortMenu.increaseIndex();
+            if (sortMenu.optionIndex === sortMenu.options.length) {
+                sortMenu.optionIndex = firstSelectableElementIndex;
+            }
+        } else if (event.key === "ArrowUp") {
+            sortMenu.decreaseIndex();
+            if (sortMenu.optionIndex === -1) {
+                sortMenu.optionIndex = lastSelectableElementIndex;
+            }
+        }
+        return selectElement(true);
+    }
+
+    if (event.key === "Escape" || event.key === "Tab") {
+        if (sortMenu.menu.classList.contains("show")) {
+            resetSortMenu();
+            toggleMenu(sortMenu)();
+            if (event.key === "Escape") sortMenu.btn.focus();
+        }
+    }
+
+    if (event.key === "Enter") {
+        const currentElement = sortMenu.options[sortMenu.optionIndex];
+        return location.href = currentElement.firstElementChild.href;
+    }
+}
+
+function selectElement(bool) {
+    const currentElement = sortMenu.options[sortMenu.optionIndex];
+    currentElement.setAttribute("aria-selected", bool);
+    if (bool) {
+        sortMenu.menu.setAttribute("aria-activedescendant", `${currentElement.id}`);
+        currentElement.classList.add("selected");
+    } else {
+        currentElement.classList.remove("selected");
+    }
 }
 
 function toggleMenu(menu) {
@@ -54,7 +110,8 @@ function toggleMenu(menu) {
         if (!menu.openBtn) menu.btn.setAttribute("aria-expanded", `${isMenuOpened}`)
         else menu.openBtn.btn.setAttribute("aria-expanded", `${isMenuOpened}`);
 
-        toggleFixedLayoutBody();
+        if (menu === filterBtn) toggleFixedLayoutBody();
+        if (menu === sort) resetSortMenu();
 
         if (menu.btn.querySelector("span") || menu.openBtn) return changeSpanText();
 
@@ -69,10 +126,20 @@ function toggleMenu(menu) {
     }
 }
 
+function manageMenu(menu) {
+    const otherMenu = menu === filterBtn ? sortMenu : filterBtn;
+    return function toggleAndCloseOtherMenuIfOpened() {
+        const isOtherMenuOpened = otherMenu.menu != null ? otherMenu.menu.classList.contains("show") : false;
+        if (isOtherMenuOpened) toggleMenu(otherMenu)();
+        return toggleMenu(menu)();
+    }
+}
+
 export function manageBtnEvents() {
     const existentItems = buttons.filter(checkIfItemExistsInDOM);
     return existentItems.map(item => {
         item.btn.addEventListener("click", item.click());
+        if (item === sortMenu) return sortMenu.menu.addEventListener("keydown", handleKeysSortMenu);
     });
 }
 
@@ -114,3 +181,14 @@ function focusTrap(event) {
     else return;
 };
 
+function getCurrentSelectedOptionIndex() {
+    const value = sortMenu.btn.getAttribute("data-selected");
+    return sortMenu.options.findIndex(item => item.id === value);
+}
+
+function resetSortMenu() {
+    selectElement(false);
+    const index = getCurrentSelectedOptionIndex();
+    sortMenu.optionIndex = index;
+    selectElement(true);
+}

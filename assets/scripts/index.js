@@ -1,4 +1,7 @@
-import { manageBtnEvents, toggleFixedLayoutBody } from "./buttons.js";
+import { manageBtnEvents, toggleFixedLayoutBody, filterBtn } from "./buttons.js";
 
 manageBtnEvents();
-window.addEventListener("resize", toggleFixedLayoutBody);
+
+if (filterBtn.btn) {
+    window.addEventListener("resize", toggleFixedLayoutBody);
+}

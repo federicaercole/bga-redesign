@@ -20,13 +20,13 @@
                 </button>
                 <div class="sort">
                     <span class="visually-hidden" id="sort-label">Sort by</span>
-                    <button class="button tertiary" id="sort" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-menu">
+                    <button class="button tertiary" id="sort" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sort-menu" data-selected="<?php echo !isset($_GET["sort"]) ? "latest" : $_GET["sort"] ?>">
                         <?php echo !isset($_GET["sort"]) ? "Latest" : ucwords($_GET["sort"]) ?> <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
                             <path d="M12 15.375L6 9.37498L7.4 7.97498L12 12.575L16.6 7.97498L18 9.37498L12 15.375Z" />
                     </button>
-                    <ul class="dropdown" id="sort-menu" role="listbox" aria-labelledby="sort-label">
+                    <ul class="dropdown" id="sort-menu" role="listbox" aria-labelledby="sort-label" tabindex="0">
                         <li id="latest" role="option" class="<?php echo !isset($_GET["sort"]) ? "selected" : checkChoice("sort", "latest") ?>">
-                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "latest"))) ?>">
+                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "latest"))) ?>" tabindex="-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" focusable="false" aria-hidden="true">
                                     <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
                                 </svg>
@@ -34,20 +34,20 @@
                             </a>
                         </li>
                         <li id="ascending" role="option" class="<?= checkChoice("sort", "ascending") ?>">
-                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "ascending"))) ?>">
+                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "ascending"))) ?>" tabindex="-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" focusable="false" aria-hidden="true">
                                     <path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
                                 </svg>
                                 Ascending</a>
                         </li>
                         <li id="descending" role="option" class="<?= checkChoice("sort", "descending") ?>">
-                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "descending"))) ?>">
+                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "descending"))) ?>" tabindex="-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" focusable="false" aria-hidden="true">
                                     <path d="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z" />
                                 </svg>Descending </a>
                         </li>
                         <li id="popular" role="option" class="<?= checkChoice("sort", "popular") ?>">
-                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "popular"))) ?>">
+                            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "popular"))) ?>" tabindex="-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" focusable="false" aria-hidden="true">
                                     <path d=" m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z" />
                                 </svg>
