@@ -21,3 +21,6 @@ class Database
         return $statement;
     }
 }
+
+require "config.php";
+$db = new Database($config);
