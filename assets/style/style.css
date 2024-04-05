@@ -282,6 +282,7 @@ input[type="checkbox"]:checked {
     display: flex;
     flex-basis: 600px;
     border-radius: var(--button-radius);
+    position: relative;
 }
 
 /*Filters modal*/
@@ -380,7 +381,8 @@ button[aria-expanded="true"] svg:not(.icon) {
     position: relative;
 }
 
-.sort .dropdown {
+.sort .dropdown,
+#suggestion-box.dropdown {
     font-size: var(--fs--1);
     position: absolute;
     background-color: white;
@@ -413,12 +415,21 @@ button[aria-expanded="true"] svg:not(.icon) {
     color: var(--primary-700);
 }
 
-#sort-menu {
+#sort-menu,
+#suggestion-box {
     gap: 0;
 }
 
 .dropdown li:not(.selected) svg {
     fill: var(--neutral-400);
+}
+
+#suggestion-box.dropdown {
+    top: 2rem;
+    z-index: 3;
+    width: 100%;
+    font-size: var(--fs-0);
+    max-height: max-content;
 }
 
 /*Navbar*/
@@ -683,7 +694,8 @@ a:focus-visible {
 
 nav a,
 footer a,
-#sort-menu a {
+#sort-menu a,
+#suggestion-box a {
     font-weight: 400;
     text-decoration: none;
     position: relative;
@@ -733,6 +745,9 @@ a:focus-visible::before,
 #sort-menu a:hover,
 #sort-menu a:active,
 #sort-menu a:focus-visible,
+#suggestion-box a:hover,
+#suggestion-box a:active,
+#suggestion-box a:focus-visible,
 .filters button:not(.neutral):hover,
 .filters button:not(.neutral):active,
 .filters button:not(.neutral):focus-visible {
@@ -742,7 +757,10 @@ a:focus-visible::before,
 
 #sort-menu .selected a:hover,
 #sort-menu .selected a:active,
-#sort-menu .selected a:focus-visible {
+#sort-menu .selected a:focus-visible,
+#suggestion-box .selected a:hover,
+#suggestion-box .selected a:active,
+#suggestion-box .selected a:focus-visible {
     background-color: var(--accent-100);
     color: var(--accent-700);
 }
@@ -771,6 +789,11 @@ button:focus-visible svg,
         outline: 3px solid var(--accent-500);
         outline-offset: 4px;
         z-index: 1;
+    }
+
+    input:focus-visible,
+    .search button[type="submit"]:focus-visible {
+        outline-offset: 1px;
     }
 }
 
