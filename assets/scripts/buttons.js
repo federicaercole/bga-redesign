@@ -32,10 +32,25 @@ const sortMenu = {
     btn: document.querySelector("#sort"),
     menu: document.querySelector("#sort-menu"),
     options: [...document.querySelectorAll("#sort-menu li")],
-    optionIndex: 0,
-    increaseIndex() { return this.optionIndex++ },
-    decreaseIndex() { return this.optionIndex-- },
+    index: 0,
+    increaseIndex() { return this.index++ },
+    decreaseIndex() { return this.index-- },
     click() { return manageMenu(this) },
+    events: [{
+        target: document.querySelector("#sort-menu"),
+        type: "keydown",
+        handler() { return (event) => handleKeysMenuBox(sortMenu, event) }
+    },
+    {
+        target: window,
+        type: "click",
+        handler() { return (event) => { closeMenuWhenClickingOutside(sortMenu, event) } }
+    },
+    {
+        target: window,
+        type: "touchstart",
+        handler() { return (event) => { closeMenuWhenClickingOutside(sortMenu, event) } }
+    }]
 };
 
 const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-haspopup="true"]')].map(function (node) {
@@ -46,7 +61,49 @@ const filterDropdownBtns = [...document.querySelectorAll('.filters button[aria-h
     };
 });
 
-const buttons = [navMenu, filterBtn, closeFilterBtn, clearFiltersBtn, ...filterDropdownBtns, sortMenu];
+const searchSuggestionBox = {
+    btn: document.querySelector("#search-input"),
+    menu: document.querySelector("#suggestion-box"),
+    options: [],
+    index: -1,
+    increaseIndex() { return this.index++ },
+    decreaseIndex() { return this.index-- },
+    events: [
+        {
+            target: document.querySelector(".search"),
+            type: "keydown",
+            handler() { return (event) => handleKeysMenuBox(searchSuggestionBox, event) }
+        },
+        {
+            target: document.querySelector("#search-input"),
+            type: "keyup",
+            handler() { return handleInput }
+        },
+        {
+            target: window,
+            type: "click",
+            handler() { return (event) => { closeMenuWhenClickingOutside(searchSuggestionBox, event) } }
+        },
+        {
+            target: window,
+            type: "touchstart",
+            handler() { return (event) => { closeMenuWhenClickingOutside(searchSuggestionBox, event) } }
+        },
+        {
+            target: document.querySelector("#search-input"),
+            type: "focus",
+            handler() {
+                return () => {
+                    if (searchSuggestionBox.btn.value.trim() !== "") {
+                        resetMenu(searchSuggestionBox);
+                        toggleMenu(searchSuggestionBox, false)();
+                    }
+                }
+            }
+        }]
+};
+
+const buttons = [navMenu, filterBtn, closeFilterBtn, clearFiltersBtn, ...filterDropdownBtns, sortMenu, searchSuggestionBox];
 
 function clearInputs() {
     const filters = document.querySelector(".filters");
@@ -56,54 +113,59 @@ function clearInputs() {
     location.reload();
 }
 
-function handleKeysSortMenu(event) {
-    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        event.preventDefault();
-        selectElement(false);
-        const firstSelectableElementIndex = 0;
-        const lastSelectableElementIndex = sortMenu.options.length - 1;
-        if (event.key === "ArrowDown") {
-            sortMenu.increaseIndex();
-            if (sortMenu.optionIndex === sortMenu.options.length) {
-                sortMenu.optionIndex = firstSelectableElementIndex;
+function handleKeysMenuBox(menu, event) {
+    if (menu.menu.classList.contains("show")) {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+            event.preventDefault();
+            selectElement(menu, false);
+            const firstSelectableElementIndex = 0;
+            const lastSelectableElementIndex = menu.options.length - 1;
+            if (event.key === "ArrowDown") {
+                menu.increaseIndex();
+                if (menu.index === menu.options.length) {
+                    menu.index = firstSelectableElementIndex;
+                }
+            } else if (event.key === "ArrowUp") {
+                menu.decreaseIndex();
+                if (menu.index === -1) {
+                    menu.index = lastSelectableElementIndex;
+                }
             }
-        } else if (event.key === "ArrowUp") {
-            sortMenu.decreaseIndex();
-            if (sortMenu.optionIndex === -1) {
-                sortMenu.optionIndex = lastSelectableElementIndex;
+            return selectElement(menu, true);
+        }
+
+        if (event.key === "Escape" || event.key === "Tab") {
+            resetMenu(menu);
+            toggleMenu(menu, true)();
+            if (event.key === "Escape") menu.btn.focus();
+        }
+
+        if (event.key === "Enter") {
+            const currentElement = menu.options[menu.index];
+            console.log(currentElement)
+            if (currentElement && currentElement.classList.contains("selected")) {
+                currentElement.dispatchEvent(new Event("blockFormSubmission"));
+                return location.href = currentElement.firstElementChild.href;
             }
         }
-        return selectElement(true);
-    }
-
-    if (event.key === "Escape" || event.key === "Tab") {
-        if (sortMenu.menu.classList.contains("show")) {
-            resetSortMenu();
-            toggleMenu(sortMenu)();
-            if (event.key === "Escape") sortMenu.btn.focus();
-        }
-    }
-
-    if (event.key === "Enter") {
-        const currentElement = sortMenu.options[sortMenu.optionIndex];
-        return location.href = currentElement.firstElementChild.href;
     }
 }
 
-function selectElement(bool) {
-    const currentElement = sortMenu.options[sortMenu.optionIndex];
-    currentElement.setAttribute("aria-selected", bool);
-    if (bool) {
-        sortMenu.menu.setAttribute("aria-activedescendant", `${currentElement.id}`);
-        currentElement.classList.add("selected");
-    } else {
-        currentElement.classList.remove("selected");
+function selectElement(menu, bool) {
+    const currentElement = menu.options[menu.index];
+    if (currentElement) {
+        currentElement.setAttribute("aria-selected", bool);
+        if (bool) {
+            menu === sortMenu ? menu.menu.setAttribute("aria-activedescendant", `${currentElement.id}`) : menu.btn.setAttribute("aria-activedescendant", `${currentElement.id}`);
+            currentElement.classList.add("selected");
+        } else {
+            currentElement.classList.remove("selected");
+        }
     }
 }
 
-function toggleMenu(menu) {
+function toggleMenu(menu, isMenuOpened = menu.menu.classList.contains("show")) {
     return function openOrCloseMenu() {
-        let isMenuOpened = menu.menu.classList.contains("show");
         isMenuOpened = !isMenuOpened;
         isMenuOpened ? menu.menu.classList.add("show") : menu.menu.classList.remove("show");
 
@@ -111,7 +173,6 @@ function toggleMenu(menu) {
         else menu.openBtn.btn.setAttribute("aria-expanded", `${isMenuOpened}`);
 
         if (menu === filterBtn) toggleFixedLayoutBody();
-        if (menu === sort) resetSortMenu();
 
         if (menu.btn.querySelector("span") || menu.openBtn) return changeSpanText();
 
@@ -138,8 +199,10 @@ function manageMenu(menu) {
 export function manageBtnEvents() {
     const existentItems = buttons.filter(checkIfItemExistsInDOM);
     return existentItems.map(item => {
-        item.btn.addEventListener("click", item.click());
-        if (item === sortMenu) return sortMenu.menu.addEventListener("keydown", handleKeysSortMenu);
+        if (item.click) item.btn.addEventListener("click", item.click());
+        if (item.events) item.events.map(event => {
+            event.target.addEventListener(event.type, event.handler());
+        });
     });
 }
 
@@ -186,9 +249,82 @@ function getCurrentSelectedOptionIndex() {
     return sortMenu.options.findIndex(item => item.id === value);
 }
 
-function resetSortMenu() {
-    selectElement(false);
-    const index = getCurrentSelectedOptionIndex();
-    sortMenu.optionIndex = index;
-    selectElement(true);
+function resetMenu(menu) {
+    selectElement(menu, false);
+    if (menu === sortMenu) {
+        menu.index = getCurrentSelectedOptionIndex();
+        selectElement(menu, true);
+    } else {
+        menu.index = -1;
+        menu.btn.removeAttribute("aria-activedescendant");
+    }
+}
+
+let typingTimer;
+
+function handleInput(event) {
+    clearTimeout(typingTimer);
+    const keys = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Escape", "Enter", "Tab", "Shift"];
+    if (!keys.includes(event.key)) {
+        if (searchSuggestionBox.btn.value.trim() === "") {
+            resetMenu(searchSuggestionBox);
+            toggleMenu(searchSuggestionBox, true)();
+        } else {
+            typingTimer = setTimeout(databaseCall, 500);
+        }
+    }
+}
+
+async function databaseCall() {
+    const results = await getSearchResults(searchSuggestionBox.btn.value);
+    if (results.length > 0) {
+        return showSuggestionBoxOptions(results);
+    }
+}
+
+function showSuggestionBoxOptions(data) {
+    if (data) {
+        const liElements = data.map((result) => {
+            const li = renderResultOption(result, () => listElementHandler(result));
+            return li;
+        });
+        resetMenu(searchSuggestionBox);
+        toggleMenu(searchSuggestionBox, false)();
+        searchSuggestionBox.menu.innerHTML = "";
+        searchSuggestionBox.menu.append(...liElements);
+        searchSuggestionBox.options = [...liElements];
+    }
+}
+
+function renderResultOption(item) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    li.setAttribute("id", `${item.slug}`)
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", "false");
+    a.href = `/games/${item.slug}`;
+    a.textContent = item.title;
+    a.tabIndex = -1;
+    li.appendChild(a);
+    li.addEventListener("blockFormSubmission", () => {
+        const form = document.querySelector(".search form");
+        form.addEventListener("submit", (event) => event.preventDefault());
+    })
+    return li;
+}
+
+async function getSearchResults(game) {
+    return await fetchData(`/search/?s=${game}`)
+}
+
+async function fetchData(url) {
+    const response = await fetch(url);
+    return await response.json();
+}
+
+function closeMenuWhenClickingOutside(menu, event) {
+    if (!menu.menu.contains(event.target) && event.target !== menu.btn) {
+        resetMenu(menu);
+        toggleMenu(menu, true)();
+    }
 }

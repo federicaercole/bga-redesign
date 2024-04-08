@@ -5,7 +5,7 @@ $games = $db->query($query, $params)->fetchAll();
 
 $items = array();
 foreach ($games as $game) {
-    $items[] = $game['title'];
+    $items[] = ["title" => $game['title'], "slug" => $game['slug']];
 }
 
 header('Content-Type: application/json;  charset=UTF-8');

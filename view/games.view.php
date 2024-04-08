@@ -14,6 +14,9 @@
                 <ul id="suggestion-box" class="dropdown" role="listbox" aria-label="Games">
                 </ul>
             </form>
+            <p id="assistive-hint" class="visually-hidden">When autocomplete results are
+                available use up and down arrows to review and enter to select. Touch device users, explore by touch
+                or with swipe gestures.</p>
             <div class="buttons">
                 <button class="button tertiary" id="filter" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="filter-menu">
                     <span>Filter</span>
