@@ -18,9 +18,7 @@ export const filterBtn = {
 
 const closeFilterBtn = {
     btn: document.querySelector("#close"),
-    menu: document.querySelector(".filters"),
-    openBtn: filterBtn,
-    click() { return toggleMenu(this) },
+    click() { return toggleMenu(filterBtn, true) },
 }
 
 const clearFiltersBtn = {
@@ -37,18 +35,13 @@ const sortMenu = {
     decreaseIndex() { return this.index-- },
     click() { return manageMenu(this) },
     events: [{
-        target: document.querySelector("#sort-menu"),
+        target: document.querySelector(".sort"),
         type: "keydown",
         handler() { return (event) => handleKeysMenuBox(sortMenu, event) }
     },
     {
-        target: window,
-        type: "click",
-        handler() { return (event) => { closeMenuWhenClickingOutside(sortMenu, event) } }
-    },
-    {
-        target: window,
-        type: "touchstart",
+        target: document,
+        type: "mousedown",
         handler() { return (event) => { closeMenuWhenClickingOutside(sortMenu, event) } }
     }]
 };
@@ -80,13 +73,8 @@ const searchSuggestionBox = {
             handler() { return handleInput }
         },
         {
-            target: window,
-            type: "click",
-            handler() { return (event) => { closeMenuWhenClickingOutside(searchSuggestionBox, event) } }
-        },
-        {
-            target: window,
-            type: "touchstart",
+            target: document,
+            type: "mousedown",
             handler() { return (event) => { closeMenuWhenClickingOutside(searchSuggestionBox, event) } }
         },
         {
@@ -142,7 +130,6 @@ function handleKeysMenuBox(menu, event) {
 
         if (event.key === "Enter") {
             const currentElement = menu.options[menu.index];
-            console.log(currentElement)
             if (currentElement && currentElement.classList.contains("selected")) {
                 currentElement.dispatchEvent(new Event("blockFormSubmission"));
                 return location.href = currentElement.firstElementChild.href;
@@ -156,7 +143,7 @@ function selectElement(menu, bool) {
     if (currentElement) {
         currentElement.setAttribute("aria-selected", bool);
         if (bool) {
-            menu === sortMenu ? menu.menu.setAttribute("aria-activedescendant", `${currentElement.id}`) : menu.btn.setAttribute("aria-activedescendant", `${currentElement.id}`);
+            menu.btn.setAttribute("aria-activedescendant", `${currentElement.id}`);
             currentElement.classList.add("selected");
         } else {
             currentElement.classList.remove("selected");
@@ -169,19 +156,18 @@ function toggleMenu(menu, isMenuOpened = menu.menu.classList.contains("show")) {
         isMenuOpened = !isMenuOpened;
         isMenuOpened ? menu.menu.classList.add("show") : menu.menu.classList.remove("show");
 
-        if (!menu.openBtn) menu.btn.setAttribute("aria-expanded", `${isMenuOpened}`)
-        else menu.openBtn.btn.setAttribute("aria-expanded", `${isMenuOpened}`);
+        menu.btn.setAttribute("aria-expanded", `${isMenuOpened}`);
 
         if (menu === filterBtn) toggleFixedLayoutBody();
 
-        if (menu.btn.querySelector("span") || menu.openBtn) return changeSpanText();
+        if (menu.btn.querySelector("span")) return changeSpanText();
 
         function changeSpanText() {
-            const spanBtn = menu.btn.querySelector("span") ?? menu.openBtn.btn.querySelector("span");
+            const spanBtn = menu.btn.querySelector("span");
             if (isMenuOpened) {
-                spanBtn.textContent = menu.textWhenOpened ?? menu.openBtn.textWhenOpened;
+                spanBtn.textContent = menu.textWhenOpened;
             } else {
-                spanBtn.textContent = menu.textWhenClosed ?? menu.openBtn.textWhenClosed;
+                spanBtn.textContent = menu.textWhenClosed;
             }
         }
     }
@@ -198,8 +184,11 @@ function manageMenu(menu) {
 
 export function manageBtnEvents() {
     const existentItems = buttons.filter(checkIfItemExistsInDOM);
-    return existentItems.map(item => {
-        if (item.click) item.btn.addEventListener("click", item.click());
+    return existentItems.forEach(item => {
+        if (item.click) item.btn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            item.click()();
+        });
         if (item.events) item.events.map(event => {
             event.target.addEventListener(event.type, event.handler());
         });
@@ -251,12 +240,12 @@ function getCurrentSelectedOptionIndex() {
 
 function resetMenu(menu) {
     selectElement(menu, false);
+    menu.btn.removeAttribute("aria-activedescendant");
     if (menu === sortMenu) {
         menu.index = getCurrentSelectedOptionIndex();
         selectElement(menu, true);
     } else {
         menu.index = -1;
-        menu.btn.removeAttribute("aria-activedescendant");
     }
 }
 
