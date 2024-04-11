@@ -15,6 +15,18 @@ function checkChoice($inputName, $value)
     }
 }
 
+function printNumberofSelectedValues($inputName)
+{
+    if (isset($_GET[$inputName])) {
+        if (is_array($_GET[$inputName]) && !empty($_GET[$inputName])) {
+            $count = count($_GET[$inputName]);
+            return "<span><span class='visually-hidden'>Number of selected filters:</span>{$count}</span>";
+        } else if ($_GET[$inputName] != "") {
+            return "<span>{$_GET[$inputName]}</span>";
+        }
+    }
+};
+
 $query = "SELECT DISTINCT * FROM games " . $expression;
 
 $games = $db->query($query, $params)->fetchAll();

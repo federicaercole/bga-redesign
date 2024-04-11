@@ -1,6 +1,6 @@
 <?php
 
-$query = "SELECT DISTINCT * FROM games " . $expression;
+$query = "SELECT DISTINCT * FROM games " . $expression . " LIMIT 10";
 $games = $db->query($query, $params)->fetchAll();
 
 $items = array();
