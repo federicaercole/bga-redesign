@@ -159,8 +159,9 @@ function toggleMenu(menu, isMenuOpened = menu.menu.classList.contains("show")) {
         menu.btn.setAttribute("aria-expanded", `${isMenuOpened}`);
 
         if (menu === filterBtn) toggleFixedLayoutBody();
+        if (menu === navMenu) changeIcon(isMenuOpened);
 
-        if (menu.btn.querySelector("span")) return changeSpanText();
+        if (menu.textWhenOpened) return changeSpanText();
 
         function changeSpanText() {
             const spanBtn = menu.btn.querySelector("span");
@@ -170,6 +171,15 @@ function toggleMenu(menu, isMenuOpened = menu.menu.classList.contains("show")) {
                 spanBtn.textContent = menu.textWhenClosed;
             }
         }
+    }
+}
+
+function changeIcon(isMenuOpened) {
+    const path = navMenu.btn.querySelector("path");
+    if (isMenuOpened) {
+        path.setAttribute("d", "m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z");
+    } else {
+        path.setAttribute("d", "M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z");
     }
 }
 
