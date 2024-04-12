@@ -8,7 +8,7 @@ function getHead()
 
 function getNavbar()
 {
-    return require "view/partials/navbar.php";
+    require "view/partials/navbar.php";
 }
 
 function getFooter()
@@ -17,10 +17,36 @@ function getFooter()
     require "view/partials/footer.php";
 }
 
+function getSearchForm()
+{
+    require "view/partials/search-form.php";
+}
+
 function getGameArticle($game)
 {
     require "./config.php";
-    return require "view/partials/game-article.php";
+    require "view/partials/game-article.php";
+}
+
+function getViewElement($file, $args = [])
+{
+    require "./config.php";
+    require "view/partials/{$file}.php";
+}
+
+function getIconMarkup($name, $isAriaHidden = true, $label = "")
+{
+    $svg = file_get_contents("assets/svg/$name.svg");
+    if ($isAriaHidden) {
+        return $svg;
+    } else {
+        $dom = new DOMDocument();
+        $dom->loadXML($svg);
+        $icon = $dom->getElementsByTagName("svg")[0];
+        $icon->setAttribute("aria-label", $label);
+        $icon->removeAttribute("aria-hidden");
+        return $dom->saveXML();
+    }
 }
 
 function urlIs($value)
