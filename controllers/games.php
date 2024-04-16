@@ -27,6 +27,9 @@ function printNumberofSelectedValues($inputName)
     }
 };
 
+$db = new Database();
+[$expression, $params] = getFilterExpression();
+
 $query = "SELECT DISTINCT * FROM games " . $expression;
 
 $games = $db->query($query, $params)->fetchAll();

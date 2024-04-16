@@ -127,7 +127,5 @@ function getFilterExpression()
         }
     }
 
-    return ['expression' => $expression, 'params' => $params];
+    return [$expression, $params];
 }
-
-['expression' => $expression, 'params' => $params] = getFilterExpression();

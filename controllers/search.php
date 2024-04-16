@@ -1,5 +1,8 @@
 <?php
 
+$db = new Database();
+[$expression, $params] = getFilterExpression();
+
 $query = "SELECT DISTINCT * FROM games " . $expression . " LIMIT 10";
 $games = $db->query($query, $params)->fetchAll();
 
