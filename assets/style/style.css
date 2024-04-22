@@ -30,10 +30,12 @@
     --primary-100: #d5e1f6;
     --primary-200: #ACC3EC;
     --primary-300: #82A6E3;
+    --primary-400: #5988D9;
     --primary-500: #2F6AD0;
     --primary-600: #2655A6;
     --primary-700: #1C407D;
     --accent-100: #FBD0D0;
+    --accent-200: #F7A1A1;
     --accent-300: #F37272;
     --accent-500: #EB1414;
     --accent-600: #BC1010;
@@ -95,9 +97,12 @@ main>*+* {
 
 h1 {
     font-size: var(--fs-5);
+    font-weight: 500;
+}
+
+.presentation h1 {
     text-align: center;
     max-width: 20ch;
-    font-weight: 500;
 }
 
 h2 {
@@ -155,17 +160,21 @@ svg {
     padding-block: 0.5rem;
     padding-inline: var(--button-padding);
     border-radius: var(--button-radius);
-    text-decoration: none;
     background-position: 100% 0;
     background-size: calc(200% + calc(var(--button-padding) * 2)) 100%;
     transition: background-position 0.4s ease-in-out;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .buttons {
     display: flex;
     gap: 1rem;
     flex-direction: column;
+    justify-content: center;
 }
 
 .button.primary {
@@ -196,10 +205,6 @@ svg {
 .search .button,
 .neutral {
     --button-padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     background-color: var(--primary-600);
     color: white;
     background-image: linear-gradient(to left,
@@ -332,8 +337,7 @@ input[type="checkbox"]:checked {
     max-height: 325px;
 }
 
-.filters legend button,
-#close {
+.filters button[type="button"]:not(.neutral) {
     display: flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
@@ -341,6 +345,7 @@ input[type="checkbox"]:checked {
     gap: 0.5rem;
     border: 2px solid transparent;
     width: 100%;
+    color: var(--neutral-900);
 }
 
 button[aria-expanded="true"] svg:not(.icon) {
@@ -353,8 +358,8 @@ button[aria-expanded="true"] svg:not(.icon) {
 }
 
 .filters legend span {
-    background-color: var(--primary-100);
-    color: var(--primary-600);
+    background-color: var(--primary-600);
+    color: white;
     padding: 0.25rem 0.5rem;
     font-size: var(--fs--2);
     border-radius: 5px;
@@ -484,6 +489,7 @@ nav li a {
 #menu svg {
     width: max(40px, 2em);
     height: max(40px, 2em);
+    color: var(--neutral-900);
 }
 
 /*Sections with CTAs*/
@@ -556,16 +562,14 @@ nav li a {
 }
 
 .cards-layout article {
-    --radius: 20px;
-    --border: 2px;
     background-color: white;
-    border: var(--border) solid var(--neutral-200);
-    border-radius: var(--radius);
+    border: 2px solid var(--neutral-200);
+    border-radius: 20px;
     padding: 2rem 1.5rem;
 }
 
-article h2 {
-    margin-block-end: var(--block-margin-s);
+article h2+p {
+    margin-block-start: var(--block-margin-s);
 }
 
 .games {
@@ -574,36 +578,43 @@ article h2 {
 
 .games article {
     position: relative;
+    overflow: hidden;
     padding: 0 0 1rem 0;
+    transform: rotate(0deg);
 }
 
-.games article .info {
+.info {
     display: flex;
     font-size: var(--fs--1);
     justify-content: center;
     gap: var(--gap-m);
 }
 
-.games article .info>* {
+.info>* {
     display: flex;
     align-items: center;
     gap: 0.25rem;
 }
 
-.games h2 {
+.games h2 a::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+}
+
+.games h2 a {
     font-size: var(--fs-2);
-    position: absolute;
     color: white;
+    text-shadow: 0 0 7px var(--neutral-900);
+    position: absolute;
     top: 1rem;
     left: 1rem;
-    text-shadow: 0 0 7px var(--neutral-900);
 }
 
 .games img {
     height: 200px;
     width: 100%;
     margin-block-end: 1rem;
-    border-radius: calc(var(--radius) - calc(var(--border) * 2)) calc(var(--radius) - calc(var(--border) * 2)) 0 0;
     object-fit: cover;
 }
 
@@ -615,7 +626,6 @@ article h2 {
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, rgba(15, 23, 42, 1) 0%, transparent 60%);
-    border-radius: calc(var(--radius) - calc(var(--border) * 2)) calc(var(--radius) - calc(var(--border) * 2)) 0 0;
 }
 
 .easy svg path:not(path:first-of-type),
@@ -623,19 +633,118 @@ article h2 {
     fill: var(--neutral-200);
 }
 
-.premium {
-    position: absolute;
-    font-size: var(--fs--2);
-    text-transform: uppercase;
+.tag {
+    font-size: var(--fs--1);
     font-weight: 500;
-    background-color: var(--accent-500);
     color: white;
     border-radius: 50px;
     padding: 0.1rem 1rem;
     letter-spacing: 0.5px;
-    border: 1px solid var(--accent-100);
+    background-color: var(--primary-500);
+    border: 1px solid var(--primary-200);
+}
+
+.premium {
+    text-transform: uppercase;
+    background-color: var(--accent-500);
+    border-color: var(--accent-200);
+}
+
+article .premium {
+    position: absolute;
     top: 1.7rem;
     right: 1rem;
+    border-color: var(--accent-100);
+    font-size: var(--fs--2);
+}
+
+/* Single game page*/
+.title {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.game .info {
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: var(--gap-s);
+    margin-block-start: 1rem;
+}
+
+.game svg {
+    fill: currentColor;
+}
+
+.game .button.tertiary {
+    --button-padding: 0.5rem;
+}
+
+.game .easy svg path:not(path:first-of-type),
+.game .medium svg path:nth-of-type(3) {
+    fill: var(--neutral-400);
+}
+
+.game .info ul {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.game>*+* {
+    margin-block-start: var(--block-margin-m);
+}
+
+.game-details {
+    display: flex;
+    gap: var(--gap-m);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game-details>* {
+    flex: 1 1 calc((50rem - 100% - 1rem)*999);
+}
+
+.game-details>*>*+* {
+    margin-block-start: 1.5rem;
+}
+
+.about ul {
+    font-size: var(--fs--1);
+}
+
+.about li+li,
+.about ul {
+    margin-block-start: 0.5rem;
+}
+
+.additional-info {
+    display: flex;
+    gap: var(--gap-m);
+    border-top: 1px solid var(--primary-300);
+    padding-block-start: 1rem;
+    flex-wrap: wrap;
+}
+
+.additional-info ul {
+    max-width: 45ch;
+}
+
+.game-image {
+    display: flex;
+    max-width: 400px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game .buttons {
+    justify-content: space-evenly;
+    gap: var(--gap-s);
+}
+
+.game .buttons .button.neutral {
+    --button-padding: 2.5rem;
 }
 
 /*Footer*/
@@ -684,12 +793,26 @@ footer h2 {
 a {
     color: var(--neutral-900);
     font-weight: 500;
+    text-decoration: none;
 }
 
-a:active,
-a:hover,
-a:focus-visible {
+p a,
+span a {
+    text-decoration: underline;
+}
+
+a:active:not(.button, h2 a),
+a:hover:not(.button, h2 a),
+a:focus-visible:not(.button, h2 a) {
     color: var(--accent-500);
+}
+
+a.tag:hover,
+a.tag:active,
+a.tag:focus-visible {
+    color: white;
+    background-color: var(--primary-700);
+    border-color: var(--primary-400);
 }
 
 nav a,
@@ -697,7 +820,6 @@ footer a,
 #sort-menu a,
 #suggestion-box a {
     font-weight: 400;
-    text-decoration: none;
     position: relative;
 }
 
@@ -774,10 +896,21 @@ button:focus-visible svg,
     fill: currentColor;
 }
 
+.games article:hover,
+.games article:active,
+.games article:focus-within {
+    box-shadow: 0 0 0 6px var(--primary-400);
+    border-color: transparent;
+}
+
 *:focus {
-    outline: 3px solid var(--accent-500);
+    outline: 4px solid var(--primary-400);
     outline-offset: 4px;
     z-index: 1;
+}
+
+.games article:focus-within :focus {
+    outline: none;
 }
 
 @supports selector(:focus-visible) {
@@ -786,7 +919,7 @@ button:focus-visible svg,
     }
 
     *:focus-visible {
-        outline: 3px solid var(--accent-500);
+        outline: 4px solid var(--primary-400);
         outline-offset: 4px;
         z-index: 1;
     }

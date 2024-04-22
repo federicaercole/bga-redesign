@@ -23,12 +23,10 @@
                     <?= getIconMarkup("complexity", false, "Complexity") ?>
                     <?= $game["complexity"] ?>
                 </div>
-                <ul aria-label="Mechanisms">
+                <ul aria-label="Mechanisms and themes">
                     <?php foreach ($mechanisms as $mechanism) : ?>
                         <li><a class="tag" href="/games/?mechanism[]=<?= $mechanism['id'] ?>"><?= $mechanism["name"] ?></a></li>
                     <?php endforeach ?>
-                </ul>
-                <ul aria-label="Themes">
                     <?php foreach ($themes as $theme) : ?>
                         <li><a class="tag" href="/games/?theme[]=<?= $theme['id'] ?>"><?= $theme["name"] ?></a></li>
                     <?php endforeach ?>
@@ -65,7 +63,7 @@
             </div>
         </div>
         <div class="buttons">
-            <a href="" class="button big secondary">Learn the game</a>
+            <a href="" class="button big neutral">Learn the game</a>
             <a href="" class="button big primary">Play now</a>
         </div>
     </div>
