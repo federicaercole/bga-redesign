@@ -5,25 +5,25 @@
     </button>
     <ul class="dropdown" id="sort-menu" role="listbox">
         <li id="latest" role="option" class="<?php echo !isset($_GET["sort"]) ? "selected" : checkChoice("sort", "latest") ?>">
-            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "latest"))) ?>" tabindex="-1">
+            <a href="<?php echo "/games/?" . http_build_query(array_merge($_GET, array("sort" => "latest"))) ?>" tabindex="-1">
                 <?= getIconMarkup("latest") ?>
                 Latest
             </a>
         </li>
         <li id="ascending" role="option" class="<?= checkChoice("sort", "ascending") ?>">
-            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "ascending"))) ?>" tabindex="-1">
+            <a href="<?php echo "/games/?" . http_build_query(array_merge($_GET, array("sort" => "ascending"))) ?>" tabindex="-1">
                 <?= getIconMarkup("ascending") ?>
                 Ascending
             </a>
         </li>
         <li id="descending" role="option" class="<?= checkChoice("sort", "descending") ?>">
-            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "descending"))) ?>" tabindex="-1">
+            <a href="<?php echo "/games/?" . http_build_query(array_merge($_GET, array("sort" => "descending"))) ?>" tabindex="-1">
                 <?= getIconMarkup("descending") ?>
                 Descending
             </a>
         </li>
         <li id="popular" role="option" class="<?= checkChoice("sort", "popular") ?>">
-            <a href="<?php echo "{$siteUri}games/?" . http_build_query(array_merge($_GET, array("sort" => "popular"))) ?>" tabindex="-1">
+            <a href="<?php echo "/games/?" . http_build_query(array_merge($_GET, array("sort" => "popular"))) ?>" tabindex="-1">
                 <?= getIconMarkup("popular") ?>
                 Popular
             </a>

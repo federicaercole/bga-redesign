@@ -49,10 +49,10 @@
         </div>
     </div>
 </footer>
-<?php if (UrlIs($siteUri)) : ?>
-    <script src="<?= $siteUri ?>assets/scripts/scroll.js"></script>
+<?php if (urlIs("/")) : ?>
+    <script src="/assets/scripts/scroll.js"></script>
 <?php endif ?>
-<script src="<?= $siteUri ?>assets/scripts/index.js" type="module"></script>
+<script src="/assets/scripts/index.js" type="module"></script>
 </body>
 
 </html>

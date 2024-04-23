@@ -824,7 +824,8 @@ footer a,
 }
 
 nav ul a::before,
-footer a::before {
+footer a::before,
+.active-page::before {
     --underline-padding: 2px;
     content: "";
     position: absolute;
@@ -840,6 +841,14 @@ footer a::before {
     background-position: 100% 0;
     background-size: calc(200% + calc(var(--underline-padding) * 2)) 100%;
     transition: background-position 0.4s ease-in-out;
+}
+
+.active-page {
+    color: var(--accent-500);
+}
+
+.active-page::before {
+    background-color: var(--accent-500);
 }
 
 a:active::before,

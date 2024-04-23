@@ -9,10 +9,7 @@
             </div>
             <nav class="navigation" id="main-nav">
                 <ul>
-                    <li><a href="/games/">Games</a></li>
-                    <li><a href="/news/">News</a></li>
-                    <li><a href="/community/">Community</a></li>
-                    <li><a href="/pricing/">Pricing</a></li>
+                    <?= printNavElements() ?>
                 </ul>
                 <div class="buttons">
                     <a class="button secondary" href="/login/">Log in</a>
